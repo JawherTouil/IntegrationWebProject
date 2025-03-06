@@ -1,10 +1,14 @@
 import React from "react";
-import Footer from "./components/Footer"; // Import the Footer
+import Footer from "./components/Footer";
+import ShoppingList from "./components/ShoppingList"; 
+import LuckyWheel from "./components/LuckyWheel";
 
 function App() {
   return (
-    <div >
-      <Footer /> {Footer}
+    <div>
+      
+      <LuckyWheel />
+      <Footer />
     </div>
   );
 }
