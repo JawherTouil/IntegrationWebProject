@@ -1,166 +1,255 @@
 "use client";
 import React, { useState } from "react";
+import stampCompleted from "../assets/stamp-completed.png";
+import stampEmpty from "../assets/stamp-empty.png";
+import progressIcon from "../assets/progress.png";
+import chocoLava from "../assets/ChocoLava.png";
+import matcha from "../assets/Matcha.png";
+import mystery from "../assets/mystery.png";
+import videoSushi from "../assets/video/videosushi.mp4";
+import discountsImg from "../assets/Discounts.png";
+import basket from "../assets/basket.png"; // Import the basket icon
+import star from "../assets/star.png"; // Import the star icon
 
-// Import images from src/assets
-import MangoMatcha from "../assets/Mango Matcha(30g).png";
-import pack from "../assets/pack.png";
-import corn from "../assets/corn.png";
-import lays from "../assets/lays.png";
-import spicy from "../assets/spicy.png";
-import maruman from "../assets/maruman.png";
-import image9 from "../assets/image(9).png";
-import rice from "../assets/rice.png";
-import muncher from "../assets/muncher.png";
-import taste from "../assets/taste.png";
-import mochi from "../assets/mochi.png";
-import sauce from "../assets/sauce.png";
-
-const Discounts = () => {
-  const [price, setPrice] = useState(100000);
+const LoyaltyPage = () => {
+  const [completedOrders, setCompletedOrders] = useState(0); // Track completed orders
+  const [showPopup, setShowPopup] = useState(false); // Control popup visibility
 
   const products = [
     {
-      image: MangoMatcha,
-      title: "Mango Matcha(30g)",
-      originalPrice: "40,000TND",
-      discountedPrice: "32,000TND",
-      discount: 20,
-      price: 40000,
+      image: chocoLava,
+      name: "Choco Lava",
+      price: "8,000 TND",
+      rating: 4, // Number of stars
     },
     {
-      image: pack,
-      title: "The Big pack",
-      originalPrice: "70,000TND",
-      discountedPrice: "49,000TND",
-      discount: 30,
-      price: 70000,
+      image: mystery,
+      name: "Little Moons",
+      price: "14,000 TND",
+      rating: 5, // Number of stars
     },
     {
-      image: corn,
-      title: "Corn Snack",
-      originalPrice: "15,000TND",
-      discountedPrice: "12,000TND",
-      discount: 20,
-      price: 15000,
-    },
-    {
-      image: lays,
-      title: "Lays Chips",
-      originalPrice: "10,000TND",
-      discountedPrice: "8,000TND",
-      discount: 20,
-      price: 10000,
-    },
-    {
-      image: spicy,
-      title: "Spicy Noodles",
-      originalPrice: "25,000TND",
-      discountedPrice: "20,000TND",
-      discount: 20,
-      price: 25000,
-    },
-    {
-      image: maruman,
-      title: "Maruman Rice",
-      originalPrice: "30,000TND",
-      discountedPrice: "24,000TND",
-      discount: 20,
-      price: 30000,
-    },
-    {
-      image: image9,
-      title: "Image 9 Snack",
-      originalPrice: "18,000TND",
-      discountedPrice: "14,400TND",
-      discount: 20,
-      price: 18000,
-    },
-    {
-      image: rice,
-      title: "Jasmine Rice",
-      originalPrice: "50,000TND",
-      discountedPrice: "40,000TND",
-      discount: 20,
-      price: 50000,
-    },
-    {
-      image: muncher,
-      title: "Muncher Cookies",
-      originalPrice: "12,000TND",
-      discountedPrice: "9,600TND",
-      discount: 20,
-      price: 12000,
-    },
-    {
-      image: taste,
-      title: "Taste of Asia",
-      originalPrice: "35,000TND",
-      discountedPrice: "28,000TND",
-      discount: 20,
-      price: 35000,
-    },
-    {
-      image: mochi,
-      title: "Mochi Ice Cream",
-      originalPrice: "22,000TND",
-      discountedPrice: "17,600TND",
-      discount: 20,
-      price: 22000,
-    },
-    {
-      image: sauce,
-      title: "Soy Sauce",
-      originalPrice: "8,000TND",
-      discountedPrice: "6,400TND",
-      discount: 20,
-      price: 8000,
+      image: matcha,
+      name: "Matcha 100% Natural",
+      price: "30,000 TND",
+      rating: 3, // Number of stars
     },
   ];
 
-  const filteredProducts = products.filter((product) => product.price <= price);
+  // Function to handle order completion
+  const handleOrderComplete = () => {
+    if (completedOrders < 5) {
+      setCompletedOrders(completedOrders + 1); // Increment completed orders
+    }
+
+    // Show popup if all 5 orders are completed
+    if (completedOrders + 1 === 5) {
+      setShowPopup(true);
+    }
+  };
+
+  // Function to close the popup
+  const closePopup = () => {
+    setShowPopup(false);
+  };
 
   return (
-    <main className="flex flex-col justify-center items-center px-20 py-32 bg-white max-md:px-5 max-md:pt-24">
-      <div className="flex flex-col w-full max-w-[1128px] max-md:max-w-full">
-        <header className="flex flex-wrap gap-5 justify-between w-full max-md:max-w-full">
-          <p className="self-start mt-4 text-xl tracking-normal leading-none text-center text-black">
-            Showing 1 - {filteredProducts.length} of {products.length} results
-          </p>
-          <div className="flex flex-col items-center gap-2">
-            <label className="text-black font-medium">Max Price: {price} TND</label>
-            <input
-              type="range"
-              min="0"
-              max="100000"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-64 h-2 bg-[#904A41] rounded-lg appearance-none cursor-pointer"
-            />
-          </div>
-        </header>
+    <main className="flex flex-col bg-white min-h-screen w-full font-asap">
+      {/* Navbar with text aligned to the left */}
+      <nav className="w-full py-4 px-4 md:px-16 text-xl font-medium text-left text-black bg-zinc-100">
+        <span className="font-light">Home &gt;</span>{" "}
+        <span className="font-bold">Loyality</span>
+      </nav>
 
-        <section className="mt-14 max-md:mt-10 max-md:max-w-full">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {filteredProducts.map((product, idx) => (
-              <div key={idx} className="bg-white p-4 rounded-lg shadow-md">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-                <h3 className="text-lg font-bold mt-4">{product.title}</h3>
-                <p className="text-gray-600">
-                  <span className="line-through">{product.originalPrice}</span>{" "}
-                  <span className="text-red-600">{product.discountedPrice}</span>
+      <div className="container mx-auto px-4 mt-8 max-w-[1105px]">
+        <div className="flex flex-col md:flex-row gap-5">
+          <section className="w-full">
+            <div className="flex flex-col md:flex-row items-start mt-8 md:mt-16 gap-6">
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-black font-quicksand">
+                  Loyal Customers Get Rewarded! 💎
+                </h2>
+                <p className="mt-6 text-xl font-medium text-black">
+                  Make 5 orders and receive a free Mystery Box!
                 </p>
-                <p className="text-green-600">{product.discount}% off</p>
+                <div className="flex flex-wrap gap-4 mt-8 w-full">
+                  <div className="flex flex-wrap md:flex-nowrap gap-2">
+                    {[1, 2, 3, 4, 5].map((stamp) => (
+                      <img
+                        key={stamp}
+                        src={
+                          stamp <= completedOrders
+                            ? stampCompleted
+                            : stampEmpty
+                        }
+                        alt={`Order stamp ${stamp}`}
+                        className="w-[60px] md:w-[68px] aspect-square object-contain"
+                      />
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2.5 text-base font-medium text-black">
+                    <p>{completedOrders} order(s) completed</p>
+                    <img
+                      src={progressIcon}
+                      alt="Progress indicator"
+                      className="w-10 aspect-square object-contain"
+                    />
+                  </div>
+                </div>
+                {/* Button to simulate order completion */}
+                <button
+                  onClick={handleOrderComplete}
+                  className="mt-6 py-2 px-4 bg-[#904A41] border border-black text-white rounded-lg text-sm font-medium"
+                >
+                  Complete Order
+                </button>
               </div>
+              <div className="w-full md:w-[300px] h-[200px] rounded-lg overflow-hidden">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src={videoSushi} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* Popup for winning */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white p-8 rounded-lg text-center">
+            <h2 className="text-2xl font-bold text-black mb-4">You Win! 🎉</h2>
+            <p className="text-lg text-gray-700 mb-6">
+              Congratulations! You've completed 5 orders and earned a free Mystery
+              Box!
+            </p>
+            <button
+              onClick={closePopup}
+              className="py-2 px-4 bg-[#904A41] border border-black text-white rounded-lg text-sm font-medium"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Rest of the code remains unchanged */}
+      <section className="container mx-auto px-4 mt-10 md:mt-14 max-w-[1125px]">
+        <div className="flex flex-col md:flex-row gap-5">
+          <article className="w-full md:w-1/2">
+            <div className="relative flex flex-col rounded-xl overflow-hidden min-h-[400px] md:min-h-[606px]">
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/30 z-10"></div>
+              <img
+                src={discountsImg}
+                alt="Discounts background"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="relative p-6 md:p-12 flex flex-col h-full z-20">
+                <h2 className="text-4xl md:text-8xl font-bold text-amber-200 font-quicksand mb-8">
+                  Discounts
+                </h2>
+                <div className="flex flex-col justify-end items-center h-full">
+                  <button className="w-full max-w-[250px] py-3 px-2 text-base md:text-lg font-medium text-black bg-amber-200 rounded-lg text-center mt-64">
+                    Grab Exclusive Discounts
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article className="w-full md:w-1/2">
+            <div className="relative flex flex-col rounded-xl overflow-hidden min-h-[400px] md:min-h-[606px]">
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/30 z-10"></div>
+              <img
+                src={mystery}
+                alt="Mystery Box background"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="relative p-6 md:p-12 flex flex-col h-full z-20">
+                <h2 className="text-4xl md:text-7xl font-bold text-amber-200 leading-tight font-quicksand mb-8">
+                  Mystery Box
+                </h2>
+                <div className="flex flex-col justify-end items-center h-full">
+                  <button className="w-full max-w-[250px] py-3 px-2 text-base md:text-lg font-medium text-black bg-amber-200 rounded-lg text-center mt-72">
+                    Claim Your Mystery Box
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* Best Seller Section */}
+      <section className="w-full bg-amber-200 mt-10 md:mt-14 px-4 py-12 md:py-20">
+        <div className="container mx-auto max-w-[1126px]">
+          <h2 className="text-4xl md:text-6xl font-bold text-black mb-8 md:mb-12 font-quicksand">
+            Best seller
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {products.map((product, index) => (
+              <article
+                key={index}
+                className="bg-white rounded-xl p-5 flex flex-col"
+              >
+                <div className="flex gap-4">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-[100px] aspect-square object-cover rounded-lg"
+                  />
+                  <div className="flex flex-col flex-1">
+                    <h3 className="text-base font-medium text-black font-quicksand">
+                      {product.name}
+                    </h3>
+                    {/* Price in Red and Bold */}
+                    <p className="text-sm text-red-600 font-bold mt-1">
+                      {product.price}
+                    </p>
+                    {/* Rating Stars */}
+                    <div className="flex gap-1 mt-2">
+                      {[...Array(5)].map((_, i) => (
+                        <img
+                          key={i}
+                          src={star}
+                          alt="Star"
+                          className={`w-4 h-4 ${
+                            i < product.rating ? "opacity-100" : "opacity-30"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {/* Discover Button and Basket Icon */}
+                <div className="flex justify-center items-center mt-4 gap-4">
+                  <button
+                    className="py-2 px-4 bg-[#904A41] border border-black text-white rounded-lg text-sm font-medium"
+                  >
+                    Discover
+                  </button>
+                  <img
+                    src={basket}
+                    alt="Basket"
+                    className="w-6 h-6 cursor-pointer"
+                  />
+                </div>
+              </article>
             ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
   );
 };
 
-export default Discounts;
+export default LoyaltyPage;
